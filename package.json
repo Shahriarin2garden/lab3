@@ -1,0 +1,25 @@
+{
+  "name": "lab3-async-node",
+  "version": "1.0.0",
+  "description": "Lab 3: Asynchronous Programming in Node.js",
+  "main": "lab3.js",
+  "scripts": {
+    "start": "node lab3.js",
+    "test": "node test.js",
+    "examples": "node examples.js",
+    "event-loop": "node event-loop-deep-dive.js",
+    "all": "node lab3.js && node test.js && node examples.js"
+  },
+  "keywords": [
+    "nodejs",
+    "async",
+    "promises",
+    "callbacks",
+    "event-loop"
+  ],
+  "author": "GitHub Copilot",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
