@@ -1,4 +1,4 @@
-// 🧪 Lab 3 Test File - Individual Component Tests
+// >> Lab 3 Test File - Individual Component Tests
 // This file tests individual components of the lab
 
 const fs = require('fs');
@@ -38,7 +38,7 @@ class AsyncTaskQueue {
             
             try {
                 taskCount++;
-                console.log(`🧪 Testing task ${taskCount}...`);
+                console.log(`> Testing task ${taskCount}...`);
                 const result = await task();
                 resolve(result);
             } catch (error) {
@@ -47,13 +47,13 @@ class AsyncTaskQueue {
         }
 
         this.isRunning = false;
-        console.log(`✅ All ${taskCount} tasks completed!`);
+        console.log(`+ All ${taskCount} tasks completed!`);
     }
 }
 
 // Test functions
 async function testPromiseChaining() {
-    console.log('🧪 Testing Promise Chaining');
+    console.log('> Testing Promise Chaining');
     console.log('===========================');
     
     const promise1 = Promise.resolve('First');
@@ -62,20 +62,20 @@ async function testPromiseChaining() {
     
     try {
         const result = await promise3;
-        console.log('✅ Promise chain result:', result);
+        console.log('+ Promise chain result:', result);
     } catch (error) {
-        console.error('❌ Promise chain error:', error.message);
+        console.error('! Promise chain error:', error.message);
     }
 }
 
 async function testParallelExecution() {
-    console.log('\n🧪 Testing Parallel Execution');
+    console.log('\n> Testing Parallel Execution');
     console.log('=============================');
     
     const start = Date.now();
     
     // Sequential execution
-    console.log('🔄 Sequential execution...');
+    console.log('| Sequential execution...');
     const sequentialStart = Date.now();
     await new Promise(resolve => setTimeout(resolve, 100));
     await new Promise(resolve => setTimeout(resolve, 100));
@@ -83,7 +83,7 @@ async function testParallelExecution() {
     const sequentialTime = Date.now() - sequentialStart;
     
     // Parallel execution
-    console.log('⚡ Parallel execution...');
+    console.log('+ Parallel execution...');
     const parallelStart = Date.now();
     await Promise.all([
         new Promise(resolve => setTimeout(resolve, 100)),
@@ -92,13 +92,13 @@ async function testParallelExecution() {
     ]);
     const parallelTime = Date.now() - parallelStart;
     
-    console.log(`📊 Sequential time: ${sequentialTime}ms`);
-    console.log(`📊 Parallel time: ${parallelTime}ms`);
-    console.log(`⚡ Speedup: ${(sequentialTime / parallelTime).toFixed(2)}x`);
+    console.log(`| Sequential time: ${sequentialTime}ms`);
+    console.log(`| Parallel time: ${parallelTime}ms`);
+    console.log(`+ Speedup: ${(sequentialTime / parallelTime).toFixed(2)}x`);
 }
 
 async function testErrorPropagation() {
-    console.log('\n🧪 Testing Error Propagation');
+    console.log('\n> Testing Error Propagation');
     console.log('============================');
     
     async function level1() {
@@ -109,7 +109,7 @@ async function testErrorPropagation() {
         try {
             await level1();
         } catch (error) {
-            console.log('🔄 Caught in level 2, re-throwing...');
+            console.log('| Caught in level 2, re-throwing...');
             throw new Error(`Level 2 wrapper: ${error.message}`);
         }
     }
@@ -118,7 +118,7 @@ async function testErrorPropagation() {
         try {
             await level2();
         } catch (error) {
-            console.log('✅ Final catch in level 3:', error.message);
+            console.log('+ Final catch in level 3:', error.message);
         }
     }
     
@@ -126,7 +126,7 @@ async function testErrorPropagation() {
 }
 
 async function testTaskQueue() {
-    console.log('\n🧪 Testing Task Queue');
+    console.log('\n> Testing Task Queue');
     console.log('====================');
     
     const queue = new AsyncTaskQueue();
@@ -148,12 +148,12 @@ async function testTaskQueue() {
     ];
     
     const results = await Promise.all(tasks);
-    console.log('📋 Task results:', results);
+    console.log('| Task results:', results);
 }
 
 // Main test runner
 async function runTests() {
-    console.log('🧪 Running Lab 3 Component Tests');
+    console.log('>> Running Lab 3 Component Tests');
     console.log('================================\n');
     
     await testPromiseChaining();
@@ -161,11 +161,11 @@ async function runTests() {
     await testErrorPropagation();
     await testTaskQueue();
     
-    console.log('\n🎉 All tests completed!');
+    console.log('\n* All tests completed!');
 }
 
 // Run tests
 runTests().catch(error => {
-    console.error('❌ Test runner error:', error);
+    console.error('! Test runner error:', error);
     process.exit(1);
 });

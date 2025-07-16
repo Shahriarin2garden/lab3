@@ -1,28 +1,28 @@
-# 🚀 Lab 3: Asynchronous Programming in Node.js
+# >> Lab 3: Asynchronous Programming in Node.js
 
-## 📘 Overview
+## Overview
 
 This lab introduces key concepts of **asynchronous programming** in Node.js, focusing on callbacks, promises, async/await, and error handling mechanisms. You'll also gain insights into how the Node.js **Event Loop** works.
 
-## 🎯 Learning Objectives
+## Learning Objectives
 
 By the end of this lab, you will be able to:
 
-* ✅ Understand and differentiate between **callbacks**, **promises**, and **async/await**
-* 🔁 Refactor callback-based code using **promises** and **async/await**
-* 🧯 Implement error handling in asynchronous operations
-* 🧵 Build a simple asynchronous **task queue**
-* 🧠 Visualize the basics of the **Node.js Event Loop**
+* + Understand and differentiate between **callbacks**, **promises**, and **async/await**
+* > Refactor callback-based code using **promises** and **async/await**
+* | Implement error handling in asynchronous operations
+* - Build a simple asynchronous **task queue**
+* * Visualize the basics of the **Node.js Event Loop**
 
-## 🧪 Topics Covered
+## Topics Covered
 
-* 🪝 Callbacks and Callback Hell
-* 🔗 Promises and Promise Chaining
-* ⏳ Async/Await Syntax
-* ⚠️ Error Handling in Asynchronous Code
-* 🌀 Event Loop Basics
+* - Callbacks and Callback Hell
+* - Promises and Promise Chaining
+* * Async/Await Syntax
+* ! Error Handling in Asynchronous Code
+* > Event Loop Basics
 
-## 🛠️ Setup Instructions
+## Setup Instructions
 
 ### 1. Check Node.js Version
 
@@ -44,9 +44,9 @@ Or using npm:
 npm start
 ```
 
-## 📋 Task Descriptions
+## Task Descriptions
 
-### 🔧 Task 1: Callback to Promise Conversion
+### >> Task 1: Callback to Promise Conversion
 
 * **Goal:** Convert callback-based file operations into **Promise-based** implementations.
 * **Modules:** `fs`, `fs/promises`
@@ -54,13 +54,13 @@ npm start
   * `readFileCallback()` – uses traditional callback
   * `readFilePromise()` – uses `.then().catch()` chaining
 
-### ⏱ Task 2: Async/Await File Processing
+### >> Task 2: Async/Await File Processing
 
 * **Goal:** Use `async/await` for a cleaner async syntax
 * **Function:** `readFileAsync()`
 * **Benefit:** Easier to read, maintain, and debug
 
-### 📦 Task 3: Build an Async Task Queue
+### >> Task 3: Build an Async Task Queue
 
 * **Goal:** Create a class to execute async functions one at a time (FIFO)
 * **Class:** `AsyncTaskQueue`
@@ -73,7 +73,7 @@ queue.add(async () => {
 });
 ```
 
-### 🧯 Task 4: Error Handling with Try-Catch
+### >> Task 4: Error Handling with Try-Catch
 
 * **Goal:** Implement error catching in `async` functions
 * **Function:** `faultyOperation()`
@@ -87,7 +87,7 @@ try {
 }
 ```
 
-### 🔁 Task 5: Understand the Event Loop
+### >> Task 5: Understand the Event Loop
 
 * **Goal:** Demonstrate the execution order of sync vs async code
 * **Expected Output:**
@@ -100,29 +100,29 @@ try {
 5. Immediate callback (check queue)
 ```
 
-## 📚 Additional Learning Materials
+## Additional Learning Materials
 
-### 🧪 test.js - Component Tests
+### >> test.js - Component Tests
 - Tests individual components in isolation
 - Demonstrates promise chaining
 - Shows parallel vs sequential execution
 - Tests error propagation patterns
 
-### 📖 examples.js - Advanced Patterns
+### >> examples.js - Advanced Patterns
 - Callback hell vs clean async/await comparison
 - Concurrent file processing
 - Retry mechanisms and error handling
 - Timeout patterns
 - Stream processing with async/await
 
-### 🔄 event-loop-deep-dive.js - Event Loop Mastery
+### >> event-loop-deep-dive.js - Event Loop Mastery
 - Detailed explanation of all event loop phases
 - Microtask queue vs callback queue
 - process.nextTick() priority
 - Non-blocking patterns
 - Common pitfalls and solutions
 
-## 📂 File Structure
+## File Structure
 
 ```
 lab3-async-node/
@@ -135,7 +135,7 @@ lab3-async-node/
 └── README.md                  # This file
 ```
 
-## 🚀 Running the Lab
+## Running the Lab
 
 ### Individual Files:
 ```bash
@@ -170,22 +170,22 @@ npm run event-loop
 npm run all
 ```
 
-## ✅ Best Practices
+## Best Practices
 
 * Use `try-catch` around all async/await logic
 * Avoid nested callbacks (callback hell!)
 * Use `Promise.all()` for concurrent tasks where applicable
 * Learn and test how the **event loop** affects execution
 
-## 📚 References
+## References
 
-* 📄 [Node.js fs module](https://nodejs.org/api/fs.html)
-* 🧵 [MDN: Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
-* 🔁 [Node.js Event Loop](https://nodejs.dev/en/learn/understanding-the-nodejs-event-loop/)
-* ⏳ [MDN: Async/Await](https://developer.mozilla.org/en/docs/Learn/JavaScript/Asynchronous/Promises)
+* > [Node.js fs module](https://nodejs.org/api/fs.html)
+* - [MDN: Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+* > [Node.js Event Loop](https://nodejs.dev/en/learn/understanding-the-nodejs-event-loop/)
+* * [MDN: Async/Await](https://developer.mozilla.org/en/docs/Learn/JavaScript/Asynchronous/Promises)
 
-## 🎉 Final Note
+## Final Note
 
 This lab gives you **real-world tools** to handle asynchronous operations in Node.js. Try tweaking the task queue or introducing delays to better understand the runtime.
 
-Happy Hacking! 💻✨
+Happy Hacking!

@@ -1,16 +1,16 @@
-// 📚 Lab 3 Examples - Practical Usage Patterns
+// >> Lab 3 Examples - Practical Usage Patterns
 // This file demonstrates practical usage of the async patterns
 
 const fs = require('fs');
 const fsPromises = require('fs/promises');
 
 // ============================================================================
-// 🌟 Example 1: Converting Callback Hell to Clean Async/Await
+// >> Example 1: Converting Callback Hell to Clean Async/Await
 // ============================================================================
 
 // BAD: Callback Hell Example
 function callbackHellExample() {
-    console.log('💀 Callback Hell Example:');
+    console.log('! Callback Hell Example:');
     
     fs.readFile('input.txt', 'utf8', (err1, data1) => {
         if (err1) {
@@ -36,7 +36,7 @@ function callbackHellExample() {
                         return;
                     }
                     
-                    console.log('✅ Callback hell completed (but messy!)');
+                    console.log('+ Callback hell completed (but messy!)');
                 });
             });
         });
@@ -45,7 +45,7 @@ function callbackHellExample() {
 
 // GOOD: Clean Async/Await Example
 async function cleanAsyncExample() {
-    console.log('✨ Clean Async/Await Example:');
+    console.log('+ Clean Async/Await Example:');
     
     try {
         // Read original file
@@ -60,18 +60,18 @@ async function cleanAsyncExample() {
         // Write final processed version
         await fsPromises.writeFile('temp2.txt', data2 + ' - PROCESSED');
         
-        console.log('✅ Clean async/await completed!');
+        console.log('+ Clean async/await completed!');
     } catch (error) {
-        console.error('❌ Error in clean async example:', error.message);
+        console.error('! Error in clean async example:', error.message);
     }
 }
 
 // ============================================================================
-// 🌟 Example 2: Concurrent File Processing
+// >> Example 2: Concurrent File Processing
 // ============================================================================
 
 async function concurrentFileProcessing() {
-    console.log('\n⚡ Concurrent File Processing Example:');
+    console.log('\n+ Concurrent File Processing Example:');
     
     const filesToProcess = ['input.txt', 'input.txt', 'input.txt']; // Simulate multiple files
     const startTime = Date.now();
@@ -88,20 +88,20 @@ async function concurrentFileProcessing() {
         );
         
         const endTime = Date.now();
-        console.log(`✅ Processed ${results.length} files in ${endTime - startTime}ms`);
-        console.log('📋 Results:', results);
+        console.log(`+ Processed ${results.length} files in ${endTime - startTime}ms`);
+        console.log('| Results:', results);
         
     } catch (error) {
-        console.error('❌ Error in concurrent processing:', error.message);
+        console.error('! Error in concurrent processing:', error.message);
     }
 }
 
 // ============================================================================
-// 🌟 Example 3: Advanced Error Handling Patterns
+// >> Example 3: Advanced Error Handling Patterns
 // ============================================================================
 
 async function advancedErrorHandling() {
-    console.log('\n🛡️ Advanced Error Handling Example:');
+    console.log('\n> Advanced Error Handling Example:');
     
     // Retry mechanism
     async function retryOperation(operation, maxRetries = 3) {
@@ -109,7 +109,7 @@ async function advancedErrorHandling() {
             try {
                 return await operation();
             } catch (error) {
-                console.log(`❌ Attempt ${attempt} failed: ${error.message}`);
+                console.log(`! Attempt ${attempt} failed: ${error.message}`);
                 
                 if (attempt === maxRetries) {
                     throw new Error(`Operation failed after ${maxRetries} attempts: ${error.message}`);
@@ -133,18 +133,18 @@ async function advancedErrorHandling() {
     
     try {
         const result = await retryOperation(unreliableOperation);
-        console.log('✅ Retry result:', result);
+        console.log('+ Retry result:', result);
     } catch (error) {
-        console.error('❌ Final error:', error.message);
+        console.error('! Final error:', error.message);
     }
 }
 
 // ============================================================================
-// 🌟 Example 4: Timeout and Cancellation
+// >> Example 4: Timeout and Cancellation
 // ============================================================================
 
 async function timeoutExample() {
-    console.log('\n⏰ Timeout Example:');
+    console.log('\n> Timeout Example:');
     
     // Create a promise that times out
     function withTimeout(promise, timeoutMs) {
@@ -165,26 +165,26 @@ async function timeoutExample() {
     try {
         // This will timeout
         const result1 = await withTimeout(slowOperation(), 1000);
-        console.log('✅ Result 1:', result1);
+        console.log('+ Result 1:', result1);
     } catch (error) {
-        console.log('⏰ Expected timeout:', error.message);
+        console.log('> Expected timeout:', error.message);
     }
     
     try {
         // This will succeed
         const result2 = await withTimeout(slowOperation(), 3000);
-        console.log('✅ Result 2:', result2);
+        console.log('+ Result 2:', result2);
     } catch (error) {
-        console.error('❌ Unexpected error:', error.message);
+        console.error('! Unexpected error:', error.message);
     }
 }
 
 // ============================================================================
-// 🌟 Example 5: Stream Processing (Advanced)
+// >> Example 5: Stream Processing (Advanced)
 // ============================================================================
 
 async function streamProcessingExample() {
-    console.log('\n🌊 Stream Processing Example:');
+    console.log('\n> Stream Processing Example:');
     
     const { pipeline } = require('stream/promises');
     const { Transform } = require('stream');
@@ -204,23 +204,23 @@ async function streamProcessingExample() {
             fs.createWriteStream('stream_output.txt')
         );
         
-        console.log('✅ Stream processing completed');
+        console.log('+ Stream processing completed');
         
         // Read the result
         const result = await fsPromises.readFile('stream_output.txt', 'utf8');
-        console.log('📋 Stream result:', result.trim());
+        console.log('| Stream result:', result.trim());
         
     } catch (error) {
-        console.error('❌ Stream processing error:', error.message);
+        console.error('! Stream processing error:', error.message);
     }
 }
 
 // ============================================================================
-// 🚀 Main Example Runner
+// >> Main Example Runner
 // ============================================================================
 
 async function runExamples() {
-    console.log('📚 Lab 3 Practical Examples');
+    console.log('>> Lab 3 Practical Examples');
     console.log('===========================');
     
     // Run callback hell example (non-blocking)
@@ -236,7 +236,7 @@ async function runExamples() {
     await timeoutExample();
     await streamProcessingExample();
     
-    console.log('\n🎉 All examples completed!');
+    console.log('\n* All examples completed!');
     
     // Cleanup temporary files
     const tempFiles = ['temp1.txt', 'temp2.txt', 'output1.txt', 'output2.txt', 'output3.txt', 'stream_output.txt'];
@@ -251,6 +251,6 @@ async function runExamples() {
 
 // Run examples
 runExamples().catch(error => {
-    console.error('❌ Examples runner error:', error);
+    console.error('! Examples runner error:', error);
     process.exit(1);
 });
