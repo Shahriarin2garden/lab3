@@ -124,7 +124,7 @@ The Node.js event loop has 6 distinct phases:
 
 #### 🎨 **Node.js Architecture Diagram:**
 
-![Node.js Event Loop and Asynchronous Architecture](https://file+.vscode-resource.vscode-cdn.net/e%3A/New%20Folder%281%29/Downloads/lab3/node.drawio%20%281%29.svg?version%3D1752943597363)
+![Node.js Event Loop and Asynchronous Architecture](./node.drawio%20(1).svg)
 
 *Complete Node.js Event Loop and Asynchronous Architecture - Visual representation of how Node.js handles async operations*
 
