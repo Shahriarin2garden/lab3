@@ -23,7 +23,7 @@ Node.js leverages JavaScript's inherent asynchronous nature through several key 
 
 #### 🔄 **Callbacks**: The Foundation of Async
 Functions passed as arguments to be executed upon operation completion. While simple, they can lead to "callback hell" with nested operations.
-
+![alt text](image-3.png)
 ```js
 // Simple callback example
 fs.readFile('file.txt', 'utf8', (err, data) => {
@@ -66,21 +66,26 @@ The Node.js runtime operates on a single-threaded event loop model that efficien
 
 #### 🏗️ **Core Components of Node.js Architecture:**
 
-```
-┌─────────────────────────────────────────────────┐
-│                 Call Stack                      │ ← JavaScript execution
-├─────────────────────────────────────────────────┤
-│              Web APIs / Node APIs                │ ← setTimeout, fs, http
-├─────────────────────────────────────────────────┤
-│             Microtask Queue                     │ ← Promises, queueMicrotask
-│              (High Priority)                    │
-├─────────────────────────────────────────────────┤
-│              Callback Queue                     │ ← setTimeout, setInterval
-│              (Task Queue)                       │
-└─────────────────────────────────────────────────┘
-                         │
-                    Event Loop
-```
+#### 🎨 **Node.js Architecture Diagram:**
+
+<div align="center">
+  <img src="./node.drawio%20(1).svg" alt="Node.js Event Loop and Asynchronous Architecture" width="100%" style="max-width: 1200px; min-width: 800px;">
+</div>
+
+*Complete Node.js Event Loop and Asynchronous Architecture - Visual representation of how Node.js handles async operations*
+
+
+
+
+
+
+
+# Node.js Event Loop
+
+<!-- mermaid
+flowchart LR
+    A["🕐 TIMERS<br/>setTimeout"] --> 
+
 
 1. **Call Stack**: Where JavaScript code executes synchronously
 2. **Web APIs/Node APIs**: Handle async operations (file I/O, timers, network)
@@ -93,24 +98,7 @@ The Node.js runtime operates on a single-threaded event loop model that efficien
 The Node.js event loop has 6 distinct phases:
 
 ```
-   ┌───────────────────────────┐
-┌─>│           timers          │  ← setTimeout, setInterval
-│  └─────────────┬─────────────┘
-│  ┌─────────────┴─────────────┐
-│  │     pending callbacks     │  ← I/O callbacks deferred
-│  └─────────────┬─────────────┘
-│  ┌─────────────┴─────────────┐
-│  │       idle, prepare       │  ← Internal use only
-│  └─────────────┬─────────────┘
-│  ┌─────────────┴─────────────┐
-│  │           poll            │  ← Fetch new I/O events
-│  └─────────────┬─────────────┘
-│  ┌─────────────┴─────────────┐
-│  │           check           │  ← setImmediate callbacks
-│  └─────────────┬─────────────┘
-│  ┌─────────────┴─────────────┐
-└──┤      close callbacks      │  ← socket.on('close', ...)
-   └───────────────────────────┘
+
 ```
 
 **Between each phase**: Process microtasks (Promises, process.nextTick)
@@ -122,13 +110,7 @@ The Node.js event loop has 6 distinct phases:
 - **High Concurrency**: Handle thousands of connections efficiently
 - **Memory Efficient**: Lower memory footprint than multi-threaded models
 
-#### 🎨 **Node.js Architecture Diagram:**
 
-<div align="center">
-  <img src="./node.drawio%20(1).svg" alt="Node.js Event Loop and Asynchronous Architecture" width="100%" style="max-width: 1200px; min-width: 800px;">
-</div>
-
-*Complete Node.js Event Loop and Asynchronous Architecture - Visual representation of how Node.js handles async operations*
 
 The architecture demonstrates how Node.js processes asynchronous operations through different phases of the event loop, including the call stack, callback queue, microtask queue, and various timer mechanisms. Understanding this architecture is fundamental to writing efficient Node.js applications.
 
