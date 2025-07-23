@@ -375,11 +375,75 @@ npm run all
 - Never ignore errors - at minimum, log them
 - Re-throw errors when appropriate for error propagation
 
+**Example - Proper Error Handling:**
+```js
+// Good error handling
+async function properErrorHandling() {
+    try {
+        const data = await fs.promises.readFile('nonexistent.txt', 'utf8');
+        console.log('File data:', data);
+    } catch (error) {
+        console.error('Error reading file:', error.message);
+        // Handle error appropriately - maybe use default data
+        return 'Default content';
+    }
+}
+
+// Bad error handling (silent failure)
+async function badErrorHandling() {
+    try {
+        const data = await fs.promises.readFile('nonexistent.txt', 'utf8');
+        console.log('File data:', data);
+    } catch (error) {
+        // Silent failure - very bad!
+    }
+}
+```
+
+**Output:**
+```bash
+Error reading file: ENOENT: no such file or directory, open 'nonexistent.txt'
+```
+
 ### Avoid Common Mistakes
 - Don't nest callbacks (callback hell)
 - Don't block the event loop with long-running operations
 - Don't mix Promise patterns (stick to one approach)
 - Always await async functions
+
+**Example - Callback Hell vs Clean Async/Await:**
+```js
+// Callback Hell (hard to read and maintain)
+function callbackHell() {
+    fs.readFile('file1.txt', 'utf8', (err1, data1) => {
+        if (err1) throw err1;
+        fs.readFile('file2.txt', 'utf8', (err2, data2) => {
+            if (err2) throw err2;
+            fs.readFile('file3.txt', 'utf8', (err3, data3) => {
+                if (err3) throw err3;
+                console.log('All files read:', data1, data2, data3);
+            });
+        });
+    });
+}
+
+// Clean Async/Await (readable and maintainable)
+async function cleanAsyncAwait() {
+    try {
+        const data1 = await fs.promises.readFile('file1.txt', 'utf8');
+        const data2 = await fs.promises.readFile('file2.txt', 'utf8');
+        const data3 = await fs.promises.readFile('file3.txt', 'utf8');
+        console.log('All files read:', data1, data2, data3);
+    } catch (error) {
+        console.error('Error reading files:', error.message);
+    }
+}
+```
+
+**Output:**
+```bash
+All files read: Hello, async world! Hello, async world! Hello, async world!
+```
 
 ### Performance Tips
 - Use Promise.all() for concurrent independent operations
@@ -387,11 +451,105 @@ npm run all
 - Understand how the event loop affects execution order
 - Choose the right async pattern for your use case
 
+**Example - Sequential vs Parallel Execution:**
+```js
+// Sequential (slow) - takes ~3 seconds
+async function sequentialExample() {
+    console.log('Starting sequential execution...');
+    const start = Date.now();
+    
+    const result1 = await new Promise(resolve => setTimeout(() => resolve('Task 1'), 1000));
+    const result2 = await new Promise(resolve => setTimeout(() => resolve('Task 2'), 1000));
+    const result3 = await new Promise(resolve => setTimeout(() => resolve('Task 3'), 1000));
+    
+    const end = Date.now();
+    console.log(`Sequential completed in ${end - start}ms`);
+    return [result1, result2, result3];
+}
+
+// Parallel (fast) - takes ~1 second
+async function parallelExample() {
+    console.log('Starting parallel execution...');
+    const start = Date.now();
+    
+    const [result1, result2, result3] = await Promise.all([
+        new Promise(resolve => setTimeout(() => resolve('Task 1'), 1000)),
+        new Promise(resolve => setTimeout(() => resolve('Task 2'), 1000)),
+        new Promise(resolve => setTimeout(() => resolve('Task 3'), 1000))
+    ]);
+    
+    const end = Date.now();
+    console.log(`Parallel completed in ${end - start}ms`);
+    return [result1, result2, result3];
+}
+```
+
+**Output:**
+```bash
+Starting sequential execution...
+Sequential completed in 3003ms
+
+Starting parallel execution...
+Parallel completed in 1002ms
+```
+
 ### Code Organization
 - Use clear function names that indicate async behavior
 - Separate async logic into focused functions
 - Document async behavior in comments
 - Test both success and error scenarios
+
+**Example - Good Code Organization:**
+```js
+// Clear naming and organization
+async function fetchUserDataAsync(userId) {
+    try {
+        const response = await fetch(`/api/users/${userId}`);
+        return await response.json();
+    } catch (error) {
+        throw new Error(`Failed to fetch user ${userId}: ${error.message}`);
+    }
+}
+
+async function saveUserPreferencesAsync(userId, preferences) {
+    try {
+        const response = await fetch(`/api/users/${userId}/preferences`, {
+            method: 'POST',
+            body: JSON.stringify(preferences)
+        });
+        return await response.json();
+    } catch (error) {
+        throw new Error(`Failed to save preferences: ${error.message}`);
+    }
+}
+
+// Main function that orchestrates the operations
+async function updateUserProfileAsync(userId, newPreferences) {
+    try {
+        console.log(`Updating profile for user ${userId}...`);
+        
+        // Fetch current user data
+        const userData = await fetchUserDataAsync(userId);
+        console.log('User data retrieved');
+        
+        // Save new preferences
+        const result = await saveUserPreferencesAsync(userId, newPreferences);
+        console.log('Preferences saved successfully');
+        
+        return result;
+    } catch (error) {
+        console.error('Profile update failed:', error.message);
+        throw error;
+    }
+}
+```
+
+**Output:**
+```bash
+Updating profile for user 123...
+User data retrieved
+Preferences saved successfully
+```
 
 ## Learning Path
 
