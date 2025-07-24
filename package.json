@@ -2,13 +2,13 @@
   "name": "lab3-async-node",
   "version": "1.0.0",
   "description": "Lab 3: Asynchronous Programming in Node.js",
-  "main": "lab3.js",
+  "main": "src/lab3.js",
   "scripts": {
-    "start": "node lab3.js",
-    "test": "node test.js",
-    "examples": "node examples.js",
-    "event-loop": "node event-loop-deep-dive.js",
-    "all": "node lab3.js && node test.js && node examples.js"
+    "start": "node src/lab3.js",
+    "test": "node tests/test.js",
+    "examples": "node src/examples.js",
+    "event-loop": "node src/event-loop-deep-dive.js",
+    "all": "node src/lab3.js && node tests/test.js && node src/examples.js"
   },
   "keywords": [
     "nodejs",

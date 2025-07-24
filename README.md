@@ -21,31 +21,38 @@ Node.js provides three main ways to handle asynchronous operations:
 ### 1. Callbacks
 Functions passed as arguments to be executed when an operation completes.
 
-![Callback Architecture](image-3.png)
+![Callback Architecture](assets/images/image-3.png)
 
 ```js
-// Reading a file with callback
 fs.readFile('file.txt', 'utf8', (err, data) => {
     if (err) throw err;
     console.log(data);
 });
 ```
 
+**Output:**
+```bash
+Hello, async world!
+```
+
 ### 2. Promises
 Objects that represent the eventual completion (or failure) of an asynchronous operation.
 
 ```js
-// Reading a file with Promise
 fs.promises.readFile('file.txt', 'utf8')
     .then(data => console.log(data))
     .catch(err => console.error(err));
+```
+
+**Output:**
+```bash
+Hello, async world!
 ```
 
 ### 3. Async/Await
 Modern syntax that makes asynchronous code look and behave more like synchronous code.
 
 ```js
-// Reading a file with async/await
 async function readFile() {
     try {
         const data = await fs.promises.readFile('file.txt', 'utf8');
@@ -56,6 +63,11 @@ async function readFile() {
 }
 ```
 
+**Output:**
+```bash
+Hello, async world!
+```
+
 ### The Event Loop
 
 The event loop is Node.js's mechanism for handling asynchronous operations. It continuously checks for pending operations and executes their callbacks when ready.
@@ -63,7 +75,7 @@ The event loop is Node.js's mechanism for handling asynchronous operations. It c
 #### Node.js Architecture Overview
 
 <div align="center">
-  <img src="./node.drawio%20(1).svg" alt="Node.js Event Loop and Asynchronous Architecture" width="100%" style="max-width: 1200px; min-width: 800px;">
+  <img src="./assets/diagrams/node.drawio%20(1).svg" alt="Node.js Event Loop and Asynchronous Architecture" width="100%" style="max-width: 1200px; min-width: 800px;">
 </div>
 
 *Complete Node.js Event Loop and Asynchronous Architecture - Visual representation of how Node.js handles async operations*
@@ -128,6 +140,60 @@ node lab3.js
 npm start
 ```
 
+### Expected Output
+
+When you run the main lab file (`node lab3.js`), you should see output similar to this:
+
+```bash
+>> Lab 3: Asynchronous Programming in Node.js
+==============================================
+
+Task 1: Callback to Promise Conversion
+=======================================
+| Reading file using callback...
+- Reading file using Promise...
++ Promise resolved successfully
+- Promise result: Hello, async world!
+| Callback result: Hello, async world!
+
+Task 2: Async/Await Implementation
+==================================
+* Reading file using async/await...
++ Async/await completed successfully
+* Async/await result: Hello, async world!
+
+Task 3: Build an Async Task Queue
+==================================
+>> Starting task queue processing...
+| Processing task 1...
++ Task 1 complete
+| Processing task 2...
++ Task 2 complete
+| Processing task 3...
++ Task 3 complete
++ All tasks completed!
+| All task results: [ 'Task 1 result', 'Task 2 result', 'Task 3 result' ]
+
+Task 4: Error Handling
+======================
+| Running faulty operation...
++ Faulty operation completed successfully
+| Success result: Operation successful
+| Running faulty operation...
+! Caught error in faultyOperation: Something went wrong in the operation!
+! Expected error caught: Something went wrong in the operation!
+
+Task 5: Event Loop Understanding
+================================
+1. Start (synchronous)
+2. End (synchronous)
+3. Promise callback (microtask queue)
+5. Immediate callback (check queue)
+4. Timeout callback (timer queue)
+
+* All Lab 3 tasks completed successfully!
+```
+
 ## Task Details
 
 ### Task 1: Callback to Promise Conversion
@@ -141,7 +207,7 @@ npm start
 
 #### Architecture Comparison
 
-![Callback to Promise Architecture](image-1.png)
+![Callback to Promise Architecture](assets/images/image-1.png)
 
 **Before (Callback)**:
 ```js
@@ -289,7 +355,7 @@ Priority (Highest to Lowest):
 7. Close callbacks (socket closures)
 ```
 
-![Event Loop Callback Flow](callback.drawio.png)
+![Event Loop Callback Flow](assets/images/callback.drawio.png)
 
 **Example**:
 ```js
@@ -300,14 +366,22 @@ Promise.resolve().then(() => console.log('3. Promise'));
 setImmediate(() => console.log('5. Immediate'));
 
 console.log('2. Synchronous end');
-
-// Output:
-// 1. Synchronous start
-// 2. Synchronous end  
-// 3. Promise
-// 5. Immediate
-// 4. Timeout
 ```
+
+**Output:**
+```bash
+1. Synchronous start
+2. Synchronous end
+3. Promise
+5. Immediate
+4. Timeout
+```
+
+**Explanation**: 
+- Synchronous code runs first (1, 2)
+- Promises (microtasks) have higher priority than timers (3)
+- setImmediate runs in check phase (5)  
+- setTimeout runs in timer phase (4)
 
 ## Additional Files
 
@@ -377,25 +451,22 @@ npm run all
 
 **Example - Proper Error Handling:**
 ```js
-// Good error handling
 async function properErrorHandling() {
     try {
         const data = await fs.promises.readFile('nonexistent.txt', 'utf8');
         console.log('File data:', data);
     } catch (error) {
         console.error('Error reading file:', error.message);
-        // Handle error appropriately - maybe use default data
         return 'Default content';
     }
 }
 
-// Bad error handling (silent failure)
 async function badErrorHandling() {
     try {
         const data = await fs.promises.readFile('nonexistent.txt', 'utf8');
         console.log('File data:', data);
     } catch (error) {
-        // Silent failure - very bad!
+        // Silent failure
     }
 }
 ```
@@ -413,7 +484,6 @@ Error reading file: ENOENT: no such file or directory, open 'nonexistent.txt'
 
 **Example - Callback Hell vs Clean Async/Await:**
 ```js
-// Callback Hell (hard to read and maintain)
 function callbackHell() {
     fs.readFile('file1.txt', 'utf8', (err1, data1) => {
         if (err1) throw err1;
@@ -427,7 +497,6 @@ function callbackHell() {
     });
 }
 
-// Clean Async/Await (readable and maintainable)
 async function cleanAsyncAwait() {
     try {
         const data1 = await fs.promises.readFile('file1.txt', 'utf8');
@@ -453,7 +522,6 @@ All files read: Hello, async world! Hello, async world! Hello, async world!
 
 **Example - Sequential vs Parallel Execution:**
 ```js
-// Sequential (slow) - takes ~3 seconds
 async function sequentialExample() {
     console.log('Starting sequential execution...');
     const start = Date.now();
@@ -467,7 +535,6 @@ async function sequentialExample() {
     return [result1, result2, result3];
 }
 
-// Parallel (fast) - takes ~1 second
 async function parallelExample() {
     console.log('Starting parallel execution...');
     const start = Date.now();
@@ -501,7 +568,6 @@ Parallel completed in 1002ms
 
 **Example - Good Code Organization:**
 ```js
-// Clear naming and organization
 async function fetchUserDataAsync(userId) {
     try {
         const response = await fetch(`/api/users/${userId}`);
@@ -523,16 +589,13 @@ async function saveUserPreferencesAsync(userId, preferences) {
     }
 }
 
-// Main function that orchestrates the operations
 async function updateUserProfileAsync(userId, newPreferences) {
     try {
         console.log(`Updating profile for user ${userId}...`);
         
-        // Fetch current user data
         const userData = await fetchUserDataAsync(userId);
         console.log('User data retrieved');
         
-        // Save new preferences
         const result = await saveUserPreferencesAsync(userId, newPreferences);
         console.log('Preferences saved successfully');
         
